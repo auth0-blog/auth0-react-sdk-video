@@ -1,5 +1,7 @@
 import React from "react";
 import { Button, Container } from "react-bootstrap";
+import { withAuthenticationRequired } from "@auth0/auth0-react";
+import { Loading } from "../components";
 
 export const ExternalApi = () => {
   return (
@@ -18,4 +20,6 @@ export const ExternalApi = () => {
   );
 };
 
-export default ExternalApi;
+export default withAuthenticationRequired(ExternalApi, {
+  onRedirecting: () => <Loading />,
+});
