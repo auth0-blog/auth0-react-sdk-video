@@ -1,13 +1,9 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
-
-import NavBar from "./components/nav-bar";
-import Footer from "./components/footer";
-import Home from "./views/home";
-import Profile from "./views/profile";
-import ExternalApi from "./views/external-api";
-
 import { Container } from "react-bootstrap";
+
+import { NavBar, Footer } from "./components";
+import { Home, Profile, ExternalApi } from "./views";
 
 import "./app.css";
 
