@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Button, ButtonGroup, Container } from "react-bootstrap";
+import { Highlight, Loading } from "../components";
 import { withAuthenticationRequired, useAuth0 } from "@auth0/auth0-react";
-import { Loading, Highlight } from "../components";
+
 export const ExternalApi = () => {
   const [message, setMessage] = useState("");
 
@@ -48,6 +49,23 @@ export const ExternalApi = () => {
         and the API will validate it using the API's audience value.{" "}
         <strong>This route should be private</strong>.
       </p>
+      <ButtonGroup>
+        <Button color="primary" className="mt-5">
+          Get Public Message
+        </Button>
+        <Button color="primary" className="mt-5">
+          Get Private Message
+        </Button>
+      </ButtonGroup>
+
+      {message && (
+        <div className="mt-5">
+          <h6 className="muted">Result</h6>
+          <Highlight language="json">
+            {JSON.stringify(message, null, 2)}
+          </Highlight>
+        </div>
+      )}
       <ButtonGroup>
         <Button onClick={callAPI} color="primary" className="mt-5">
           Get Public Message

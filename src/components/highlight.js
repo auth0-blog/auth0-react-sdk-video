@@ -1,10 +1,12 @@
 import React from "react";
+import { PrismAsyncLight as SyntaxHighlighter } from "react-syntax-highlighter";
+import json from "react-syntax-highlighter/dist/esm/languages/prism/json";
+import atomDark from "react-syntax-highlighter/dist/esm/styles/prism/atom-dark";
 
-import { a11yDark } from "react-syntax-highlighter/dist/esm/styles/hljs";
-import SyntaxHighlighter from "react-syntax-highlighter";
+SyntaxHighlighter.registerLanguage("json", json);
 
-const Highlight = ({ children, language }) => (
-  <SyntaxHighlighter language={language} style={a11yDark}>
+const Highlight = ({ children }) => (
+  <SyntaxHighlighter language="json" style={atomDark}>
     {children}
   </SyntaxHighlighter>
 );
