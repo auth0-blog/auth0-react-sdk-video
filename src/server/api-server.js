@@ -1,20 +1,23 @@
-require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
 const helmet = require("helmet");
 const jwt = require("express-jwt");
 const jwksRsa = require("jwks-rsa");
+const { resolve } = require("path");
+
+require("dotenv").config({
+  path: resolve(process.cwd(), "src", "server", ".env"),
+});
 
 const app = express();
 
-const port = process.env.API_PORT || 3001;
-const appPort = process.env.SERVER_PORT || 7000;
-const appOrigin = process.env.APP_ORIGIN || `http://localhost:${appPort}`;
+const port = process.env.API_PORT;
+const appOrigin = process.env.APP_ORIGIN;
 const audience = process.env.AUTH0_AUDIENCE;
-const domain = process.env.AUTH0_DOMAIN;
+const issuer = process.env.AUTH0_ISSUER;
 
-if (!domain || !audience) {
+if (!issuer || !audience) {
   throw new Error("Please make sure that .env is in place and populated");
 }
 
@@ -27,17 +30,23 @@ const checkJwt = jwt({
     cache: true,
     rateLimit: true,
     jwksRequestsPerMinute: 5,
-    jwksUri: `https://${domain}/.well-known/jwks.json`,
+    jwksUri: `${issuer}.well-known/jwks.json`,
   }),
 
   audience: audience,
-  issuer: `https://${domain}/`,
-  algorithm: ["RS256"],
+  issuer: issuer,
+  algorithms: ["RS256"],
 });
 
-app.get("/api/external", checkJwt, (req, res) => {
+app.get("/api/public-message", (req, res) => {
   res.send({
-    msg: "Your access token was successfully validated!",
+    msg: "The API doesn't require an access token to share this message.",
+  });
+});
+
+app.get("/api/private-message", checkJwt, (req, res) => {
+  res.send({
+    msg: "The API successfully validated your access token.",
   });
 });
 
