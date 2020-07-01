@@ -50,23 +50,6 @@ export const ExternalApi = () => {
         <strong>This route should be private</strong>.
       </p>
       <ButtonGroup>
-        <Button color="primary" className="mt-5">
-          Get Public Message
-        </Button>
-        <Button color="primary" className="mt-5">
-          Get Private Message
-        </Button>
-      </ButtonGroup>
-
-      {message && (
-        <div className="mt-5">
-          <h6 className="muted">Result</h6>
-          <Highlight language="json">
-            {JSON.stringify(message, null, 2)}
-          </Highlight>
-        </div>
-      )}
-      <ButtonGroup>
         <Button onClick={callAPI} color="primary" className="mt-5">
           Get Public Message
         </Button>
@@ -78,9 +61,7 @@ export const ExternalApi = () => {
       {message && (
         <div className="mt-5">
           <h6 className="muted">Result</h6>
-          <Highlight language="json">
-            {JSON.stringify(message, null, 2)}
-          </Highlight>
+          <Highlight>{JSON.stringify(message, null, 2)}</Highlight>
         </div>
       )}
     </Container>
